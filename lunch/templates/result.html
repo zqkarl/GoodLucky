@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>result</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    {% if unpay_record is not None %}
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+            &times;
+        </button>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+            您{{unpay_record.uuid.create_date|date:"Y-m-d"}}的{{unpay_record.food}}可能未与{{unpay_record.uuid.biller_name}}（{{unpay_record.uuid.biller_ip}}）结清，请直接联系{{unpay_record.uuid.biller_name}}
+    </div>
+    {% endif %}
+    <table class="table">
+        <caption>猜猜会是谁</caption>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>昵称</th>
+                <th>要啥</th>
+                <th>点数</th>
+                <th>IP</th>
+                <th class="hidden-xs">时间</th>
+            </tr>
+        </thead>
+        {% for r in resultList %}
+        <tbody>
+            <tr
+            {% if ip == r.user_ip %}
+                class="info"
+            {% endif %}
+                >
+                <td>
+                    {% if ip == r.user_ip %}
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    {% endif %}
+                    {% if forloop.last %}
+                        <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
+                    {% endif %}
+                </td>
+                <td>{{r.name}}</td>
+                <td>{{r.food}}</td>
+                <td>{{r.num}}</td>
+                <td>{{r.user_ip}}</td>
+                <td class="hidden-xs">{{r.time|date:"Y-m-d H:i:s"}}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    <div class="col-xs-12 text-right">
+        {% if ip == activity.biller_ip %}
+         <a href="{% url 'bill' %}?id_={{activity.id}}" target="_blank"><span class="glyphicon glyphicon-yen" aria-hidden="true"></span> 我要记账</a>
+        {% else %}
+        <a href="{% url 'bill_confirm' %}?id_={{activity.id}}" class="visible-xs" target="_blank"><span class="glyphicon glyphicon-yen" aria-hidden="true"></span> 我要记账</a>
+        <a class="hidden-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-yen" aria-hidden="true"></span> 我要记账</a>
+        {% endif %}
+    </div>
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">提示</h4>
+            </div>
+            <div class="modal-body">
+                {% if activity.biller_ip is None %}
+                您是否为 {{record.name}} 并确认认领本次记账？
+                {% else %}
+                本次外卖已由{{activity.biller_name}}({{activity.biller_ip}})认领
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                {% if activity.biller_ip is None %}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'bill_submit'%}?id_={{activity.id}}&nickname={{record.name}}'">确认</button>
+                {% else %}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                {% endif %}
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+
+</script>
+</body>
+</html>

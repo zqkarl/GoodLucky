@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>新建</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container" style="margin-top:4%" role="main">
+        <div class="col-lg-offset-3 col-lg-6 col-sm-12" >
+            <div class="panel-body panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">创建</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" action="../create" method="post">{% csrf_token %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">类型</label>
+                            <div class="col-sm-10">
+                                <label class="radio-inline">
+                                    <input type="radio" name="activity_name" id="inlineRadio1" value="1"> 午饭
+                                </label>
+                                <label class="radio-inline">
+                                  <input type="radio" name="activity_name" id="inlineRadio2" value="2"> 下午茶
+                                </label>
+                                <label class="radio-inline">
+                                  <input type="radio" name="activity_name" id="inlineRadio3" value="3"> 晚饭
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="foodname" class="col-sm-2 control-label">选项</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="foods" id="foodname" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                            </div>
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn btn-md btn-primary pull-right">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</body>
+</html>

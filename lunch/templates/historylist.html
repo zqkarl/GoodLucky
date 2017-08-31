@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+历史记账记录
+{% endblock title %}
+{% block css %}
+<link href="https://cdn.bootcss.com/flat-ui/2.3.0/css/flat-ui.min.css" rel="stylesheet">
+{% endblock css %}
+{% block content %}
+<ul class="list-group">
+    {% for activity in activities %}
+    <li class="list-group-item">
+
+        <a href="{% url 'result' %}?id_={{activity.id}}"> {{activity.create_date}}{{activity.activity_name}}  {{activity.id}}
+        {% if not activity.clear %}
+        <span class="badge">未结清</span>
+        {% endif %}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}
+{% block js %}
+<script src="https://cdn.bootcss.com/flat-ui/2.3.0/js/flat-ui.min.js"></script>
+{% endblock js %}

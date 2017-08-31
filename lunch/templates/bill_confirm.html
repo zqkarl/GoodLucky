@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+确认信息
+{% endblock title %}
+{% block css %}
+<link href="https://cdn.bootcss.com/flat-ui/2.3.0/css/flat-ui.min.css" rel="stylesheet">
+{% endblock css %}
+{% block content %}
+<div class="col-xs-12">
+    <h2>提示：</h2>
+	<p class="lead">
+        {% if activity.biller_ip is None %}
+        您是否为{{record.name}}并确认认领本次记账？
+        {% else %}
+        本次外卖已由{{activity.biller_name}}({{activity.biller_ip}})认领
+        {% endif %}
+    </p>
+</div>
+<div>
+    {% if activity.biller_ip is None %}
+    <div class="col-xs-5"><button type="button" class="btn btn-inverse btn-lg " onclick="window.location.href='{% url 'bill_submit'%}?id_={{id}}&nickname={{record.name}}'" style="width:100%">  是  </button></div>
+    <div class="col-xs-2"></div>
+    <div class="col-xs-5"><button type="button" class="btn btn-danger btn-lg" onclick="window.location.href='{% url 'result'%}?id_={{id}}'" style="width:100%">  否  </button></div>
+    {% else %}
+    <div class="col-xs-12 text-right">
+        <button type="button" class="btn btn-danger btn-lg" onclick="window.location.href='{% url 'result'%}?id_={{id}}'" style="width:38%">  返回  </button>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="https://cdn.bootcss.com/flat-ui/2.3.0/js/flat-ui.min.js"></script>
+{% endblock js %}

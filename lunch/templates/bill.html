@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+记账单
+{% endblock title %}
+
+{% block content %}
+    <table class="table">
+        <caption>{{activity.create_date}}-{{activity.activity_name}} 记账单</caption>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>昵称</th>
+                <th class="hidden-xs">IP</th>
+                <th>是否结清</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        {% for r in resultList %}
+        <tbody>
+            <tr
+            {% if ip == r.user_ip %}
+                class="info"
+            {% endif %}
+                >
+                <td>
+                    {% if ip == r.user_ip %}
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    {% endif %}
+
+                </td>
+                <td>{{r.name}}</td>
+                <td class="hidden-xs">{{r.user_ip}}</td>
+                <td>
+                    {% if r.is_payed %}
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 已结清
+                    {% else %}
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 未结清
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'settle'%}?id_={{id}}&user_id={{r.id}}"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></a>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+{% endblock content %}
+{% block js %}
+<script>
+    var w=screen.width;
+    if(w<=1024)document.write('<link href="https://cdn.bootcss.com/flat-ui/2.3.0/css/flat-ui.min.css" rel="stylesheet">');
+</script>
+<script type="text/javascript">
+function disp_confirm()
+  {
+  var r=confirm("是否确认结清？")
+  if (r==true)
+    {
+    document.write("You pressed OK!")
+    }
+
+</script>
+{% endblock js %}
